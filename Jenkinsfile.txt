@@ -1,14 +1,12 @@
 node {
    def mvnHome
    def scannerHome
-   stage('Preparation') { // for display purposes
-      // Get some code from a GitHub repository
-      git 'https://gitlab.com/vishnukiranreddy4/spring-project.git'
-      // Get the Maven tool.
-      // ** NOTE: This 'M3' Maven tool must be configured
-      // **       in the global configuration.           
+   def JavaHome
+   stage('Preparation') {
+      git 'https://gitlab.com/vishnukiranreddy4/spring-project.git'           
       mvnHome = tool 'MAVEN_HOME'
-	   scannerHome = tool 'SonarScanner'
+      scannerHome = tool 'SonarScanner'
+      JavaHome = tool 'JAVA_HOME'
    }
    stage('CompileandPackage') {
       // Run the maven build
@@ -20,16 +18,18 @@ node {
          }
       }
    }
-   stage('CodeAnalysis') {        
+   stage('CodeAnalysis') {  
+    withEnv(["JAVA_HOME=$JavaHome"]) {      
       withSonarQubeEnv("SonarCloud") {
                      sh "${tool("SonarScanner")}/bin/sonar-scanner"
                   }
             }
+   }
    stage('DeploytoTomcat') {
       sh 'cp $(pwd)/target/*.war /opt/tomcat/webapps/'
    } 
    stage('FunctionalTesting') {
       sleep 60
-	  sh label: '', script: 'mvn -Dfilename=testng-functional.xml surefire:test'
-   }  
+      sh label: '', script: 'mvn -Dfilename=testng-functional.xml surefire:test'
+   } 
 }
