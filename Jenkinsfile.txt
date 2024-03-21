@@ -3,7 +3,7 @@ node {
    def scannerHome
    def JavaHome
    stage('Preparation') {
-      git 'https://gitlab.com/vishnukiranreddy4/spring-project.git'           
+      git credentialsId: 'bd90d7cd-6da8-49e5-80d7-be65eda6c529',url: 'https://gitlab.com/devops5390951/spring-project-1.git'           
       mvnHome = tool 'MAVEN_HOME'
       scannerHome = tool 'SonarScanner'
       JavaHome = tool 'JAVA_HOME'
