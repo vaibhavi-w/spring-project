@@ -47,26 +47,22 @@
 	</dependencies>
 	<build>
 		<finalName>spring-project</finalName>
-		<!-- KZN Changing the plugin configuration to use Java Version 8 KZN -->
 		<plugins>
-			<!-- KZN Changing the plugin configuration to use Java Version 8 KZN -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>3.8.1</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-			<!-- KZN No web.xml file for configuration KZN -->
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.2</version>
+				<version>3.3.1</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
-			<!-- To run both TestNG and JUnit Test -->
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${surefire.version}</version>
